@@ -15,7 +15,6 @@ author1:
     path: /assets/img/ocean.jpg
     # srcset is optional, but can be used to provide higher res versions for retina displays
     srcset:
-    srcset:
       1x: /assets/img/ocean.jpg
       2x: /assets/img/ocean.jpg
 
@@ -24,7 +23,7 @@ author1:
   # Rearrange to change the order in which they appear
   social:
     # twitter: <username>
-    github: wukddang
+    github: funkyblues
     email: dnr8874@gmail.com
     # email:           <mail@domain.tld>
     # rss:             https://<url>/feed.xml

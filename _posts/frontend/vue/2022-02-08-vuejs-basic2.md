@@ -14,7 +14,7 @@ categories:
   - vue
 ---
 
-# Vue - Instance & LifeCycle
+# VueJS - Instance & LifeCycle
 
 안녕하세요. 성장하는 것을 즐기는 `changuk`이라고 합니다. 현재 `fastcampus`에서 `frontend` 개발을 공부하고 있습니다. 강의를 들으면서 해온 것들을 작성하여 지식을 공유하고 또 제가 잊었을 때 다시 와서 볼 수 있도록 내용들을 정리하려고 합니다.
 
