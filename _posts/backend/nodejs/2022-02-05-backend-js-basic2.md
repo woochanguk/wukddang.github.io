@@ -18,6 +18,8 @@ categories:
 
 안녕하세요. 성장하는 것을 즐기는 `changuk`이라고 합니다. 현재 `fastcampus`에서 `backend` 개발을 공부하고 있습니다. 강의를 들으면서 해온 것들을 작성하여 지식을 공유하고 또 제가 잊었을 때 다시 와서 볼 수 있도록 내용들을 정리하려고 합니다.
 
+1. table of contents
+{:toc .large-only}
 ---
 
 이번시간에는 자주 들어봤지만, 매번 헷갈리는 개념들인 `Scope, Hoisting, Closure, Function` 등에 대해서 짚고 넘어가고자 합니다.

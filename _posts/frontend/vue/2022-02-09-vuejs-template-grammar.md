@@ -27,6 +27,16 @@ categories:
 
 ---
 
+## Code tester 
+여기서 예제코드를 테스트 해주세요
+<iframe src="https://codesandbox.io/embed/frosty-lake-khrk8?fontsize=14&hidenavigation=1&theme=dark"
+     style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="frosty-lake-khrk8"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+   ></iframe>
+
+
 ## 보간법(Interpolation)
 
 #### 문자열
@@ -52,7 +62,7 @@ v-once 디렉티브를 사용하여 데이터가 변경되어도 갱신되지 �
 
 ```vue
 <template>
-  <h1 @click="add">{{ msg }}</h1>
+  <h1 @click="add">{% raw %}{{ msg }}{% endraw %}</h1>
 </template>
 
 <script>
@@ -80,7 +90,7 @@ export default {
 ```vue
 <template>
   <h1 v-once @click="add">
-    {{ msg }}
+    {% raw %}{{ msg }}{% endraw %}
   </h1>
 </template>
 
@@ -117,7 +127,7 @@ export default {
 ```vue
 <template>
   <h1 v-once @click="add">
-    {{ msg }}
+    {% raw %}{{ msg }}{% endraw %}
   </h1>
   <h1 v-html="msg"></h1>
 </template>
@@ -153,7 +163,7 @@ Mustaches(이중 중괄호 구문)는 HTML 속성에 사용할 수 없습니다.
 ```vue
 <template>
   <h1 v-bind:class="msg">
-    {{ msg }}
+    {% raw %}{{ msg }}{% endraw %}
   </h1>
 </template>
 
@@ -213,6 +223,7 @@ export default {
 여기서는 수신할 이벤트명이 전달인자입니다. 이벤트 핸들링에 대해서도 좀 더 자세히 살펴볼 것입니다.
 
 #### 동적 전달인자
+##### v-bind
 JavaScript 표현식을 대괄호로 묶어 디렉티브 전달인자로 사용할 수도 있습니다.
 
 ```html
@@ -225,7 +236,7 @@ JavaScript 표현식을 대괄호로 묶어 디렉티브 전달인자로 사용�
 
 ```vue
 <template>
-  <h1 :[attr]="msg">{{ msg }}</h1>
+  <h1 :[attr]="msg">{% raw %}{{ msg }}{% endraw %}</h1>
 </template>
 
 <script>
@@ -253,19 +264,19 @@ export default {
 </style>
 ```
 
-위 코드에서는 data()에 정의해 둔 attr가 h1태그의 attr에 "class"라는 문자열로 들어가게 됩니다. 
+위 코드에서는 `data()`에 정의해 둔 attr가 h1태그의 attr에 **"class"**라는 문자열로 들어가게 됩니다. 
 
-
-이와 유사하게, 동적인 이벤트명에 핸들러를 바인딩할 때 동적 전달인자를 활용할 수 있습니다.
+##### v-on
+이와 유사하게, 동적인 이벤트명에 핸들러를 바인딩할 때 동적 전달인자 `v-on 디렉티브`를 활용할 수 있습니다.
 ```html
 <a v-on:[eventName]="doSomething"> ... </a>
 ```
 위 예제에서 `eventName`의 값이 `focus` 라면, **v-on:[eventName]은 v-on:focus와 같습니다.**<br>
-그러면 다음과 같은 예제로 이해해봅시다.
+다음과 같은 예제로 이해해봅시다.
 
 ```vue
 <template>
-  <h1 :[attr]="msg" @[event]="add">{{ msg }}</h1>
+  <h1 :[attr]="msg" @[event]="add">{% raw %}{{ msg }}{% endraw %}</h1>
 </template>
 
 <script>
@@ -297,7 +308,9 @@ export default {
 
 ```vue
 <template>
-  <h1 :[attr]="'active'" @[event]="add">{{ msg }}</h1>
+  <h1 :[attr]="'active'" @[event]="add">
+    {% raw %}{{ msg }}{% endraw %}
+  </h1>
 </template>
 
 <script>

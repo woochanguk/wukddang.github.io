@@ -18,6 +18,8 @@ categories:
 
 안녕하세요. 성장하는 것을 즐기는 `changuk`이라고 합니다. 현재 `fastcampus`에서 `backend` 개발을 공부하고 있습니다. 강의를 들으면서 해온 것들을 작성하여 지식을 공유하고 또 제가 잊었을 때 다시 와서 볼 수 있도록 내용들을 정리하려고 합니다.
 
+1. table of contents
+{:toc .large-only}
 ---
 
 NodeJS를 잘 이해하기 위해서는, JavaScript의 동시성 모델(실행 모델)에 대해 잘 이해해야 합니다.
@@ -152,9 +154,9 @@ someTask();
 
 <img src="/assets/img/nodejs/eventloop.png" width="400" height="300"  >
 
-1. Callback Queue에서 Callback을 꺼내고 (없다면 생길 때까지 기다리고)
-2. Callback의 처리가 끝날 때까지 Call Stack안의 내부 함수들을 실행하고
-3. 이를 반복합니다.
+1. **Callback Queue에서 Callback을 꺼내고 (없다면 생길 때까지 기다리고)**
+2. **Callback의 처리가 끝날 때까지 Call Stack안의 내부 함수들을 실행하고**
+3. **이를 반복합니다.**
 
 하나의 Callback을 처리하는 동안에 여러가지 호출이 있을 수 있습니다. NodeJS API/ Web API를 호출하게 될텐데, 브라우저와 Node는 그것들을 받아서 워커 스레드에게 일을 시킬 것입니다. <br>
 워커 스레드가 일을 다 하고 나서 **JavaScript에게 알려줘야 할 것이 있다면 Callback Queue에 알려줄 것을 등록**하게 되는 것이지요.
