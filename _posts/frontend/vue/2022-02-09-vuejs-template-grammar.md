@@ -20,7 +20,7 @@ categories:
 
 ---
 
-이번시간부터는 `VueJS`의 <a href="https://v3.ko.vuejs.org/guide/template-syntax.html" target="_blank">**Template Grammar**</a>에 대해 알아보겠습니다.
+이번 시간부터는 `VueJS`의 <a href="https://v3.ko.vuejs.org/guide/template-syntax.html" target="_blank">**Template Grammar**</a>에 대해 알아보겠습니다.
 
 1. toc
 {:toc .large-only}
@@ -48,7 +48,7 @@ v-once 디렉티브를 사용하여 데이터가 변경되어도 갱신되지 �
 
 ---
 
-그럼 배운내용들을,VueJS에서 실습을 수행해보도록 하겠습니다. 
+그럼, VueJS에서 실습을 수행해보도록 하겠습니다. 
 
 ```vue
 <template>
@@ -150,8 +150,37 @@ Mustaches(이중 중괄호 구문)는 HTML 속성에 사용할 수 없습니다.
 
 다시 VueJS실습을 수행해보겠습니다. **h1태그** 안에 `v-bind: class="msg"`라고 작성해주겠습니다. 저장하면 자동으로 `v-bind`가 사라지게 되는데 이는, `v-bind`의 약어가 `:`기호이기 때문에 발생하는 **eslint 규칙**이라고 할 수 있겠습니다.
 
+```vue
+<template>
+  <h1 v-bind:class="msg">
+    {{ msg }}
+  </h1>
+</template>
 
+<script>
+export default {
+  data() {
+    return {
+      msg: 'active'
+    }
+  },
+  methods: {
+    add() {
+      this.msg += '!'
+    }
+  }
+}
+</script>
 
+<style scoped>
+  .active {
+    color: royalblue;
+    font-size: 100px;
+  }
+</style>
+```
+
+클래스 부분에는 **msg**에 해당되는, **'active'**라는 문자가 실제 클래스로 사용되었습니다.
 브라우저에서의 출력결과를 한번 확인해볼까요? **h1태그**의 클래스가 `active`로 잘 설정된 것을 확인할 수 있겠습니다.
 
 ```html

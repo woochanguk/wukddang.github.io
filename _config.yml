@@ -112,7 +112,7 @@ paginate_path: /:num/
 # ---------------------------------------------------------------------------------------
 
 # localhost 용
-theme: jekyll-theme-hydejack
+# theme: jekyll-theme-hydejack
 # github pages 용
 remote_theme: hydecorp/hydejack@v9
 
@@ -458,3 +458,6 @@ tipue_search:
     files: []
     categories: []
     tags: []
+
+# Codepen.io
+codepen_username: wuk_ddang
