@@ -22,6 +22,17 @@ categories:
 
 1. table of contents
 {:toc .large-only}
+
+## Code tester 
+여기서 예제코드를 테스트 해주세요
+(완성된 **MyBtn.vue**파일을 components폴더에 작성해두었습니다.)
+<iframe src="https://codesandbox.io/embed/frosty-lake-khrk8?fontsize=14&hidenavigation=1&theme=dark"
+     style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="frosty-lake-khrk8"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+   ></iframe>
+
 ---
 
 
