@@ -296,3 +296,21 @@ _sass > my-style.scss .page-control {
 .submenu.menu-wrapper.hide {
   display: none;
 }
+
+a.sidebar-title > h2 {
+  margin-top: 10px;
+  margin-bottom: -20px;
+  padding-bottom: 0.5rem;
+}
+
+.hits {
+  margin-bottom: 20px;
+}
+
+// .sidebar-dividing {
+//   display: flex;
+//   align-items: center;
+//   width: 100px;
+//   height: 4px;
+//   background-color: yellow;
+// }
