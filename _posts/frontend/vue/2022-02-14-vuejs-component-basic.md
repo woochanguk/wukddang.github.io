@@ -405,7 +405,7 @@ export default {
 
 ```vue
 <template>
-  <MyBtn @click="log">
+  <MyBtn @changuk="log">
     Banana
   </MyBtn>
 </template>
@@ -437,7 +437,7 @@ export default {
 <script>
 export default {
   emits: [
-    'click'
+    'changuk'
   ]
 }
 </script>

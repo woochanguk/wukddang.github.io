@@ -10,7 +10,6 @@ description: >
 
 # FrontEnd
 
-
 ## Categories
 
 - [**JavaScript**](/js/) --- JavaScript
