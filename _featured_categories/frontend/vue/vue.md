@@ -16,6 +16,6 @@ order: 3
 
 ## Categories
 
-- [**Clone**](/clone/) --- Clone
+- [**Movie-Search**](/vue-clone/) --- VueJS Clone
 
 [clone]: /clone/
