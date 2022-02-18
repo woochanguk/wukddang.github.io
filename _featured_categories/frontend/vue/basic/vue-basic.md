@@ -2,9 +2,9 @@
 layout: list
 category: frontend
 bigtitle: Vue-Clone
-slug: vue-clone
+slug: vue-basic
 description: >
-  VueJS Clone
+  VueJS Basic
 
 related_posts:
   -

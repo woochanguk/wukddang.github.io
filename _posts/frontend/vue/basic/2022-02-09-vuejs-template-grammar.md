@@ -11,7 +11,8 @@ description: >
 invert_sidebar: false
 categories:
   - frontend
-  - vue
+  - vue-basic
+  
 ---
 
 # VueJS - Template Grammar

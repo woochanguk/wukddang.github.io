@@ -11,7 +11,7 @@ description: >
 invert_sidebar: false
 categories:
   - frontend
-  - vue
+  - vue-basic
 ---
 
 # VueJS - Instance & LifeCycle
