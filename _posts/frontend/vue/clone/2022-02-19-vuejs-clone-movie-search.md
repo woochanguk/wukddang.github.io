@@ -29,6 +29,7 @@ categories:
 ---
 ## Code tester 
 이번시간의 결과 모습입니다.
+(codesandbox 오류. 추후 업데이트)
 <!-- <iframe src="https://codesandbox.io/embed/exciting-babbage-fkmwhz?fontsize=14&hidenavigation=1&theme=dark"
      style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
      title="exciting-babbage-fkmwhz"
@@ -38,7 +39,7 @@ categories:
 
 ---
 
-## 영화검색 
+## Movie Search
 먼저 **Search.vue** 컴포넌트에서 methods 옵션 내부에 작성한 `searchMovies()` 메서드를 **movie.js**의 **actions** 옵션으로 옮겨주도록 하겠습니다. 그리고 내부에 작성한 **this** 키워드도 지워주었습니다. <br>
 그러면 이제 **title**, **type**, **year**를 입력할 수 있는 구조를 작성해주어야 하므로 **context**, **payload**라는 매개변수를 받도록 하겠습니다. <br>
 
@@ -250,3 +251,144 @@ export default {
   }
 }
 ```
+
+### 영화 검색 코드 리팩토링
+
+**store**폴더에 있는 **movie.js**파일을 다음과 같이 리팩토링을 수행하였습니다.
+
+```js
+import axios from 'axios'
+import _uniqBy from 'lodash/uniqBy'
+
+export default {
+  namespaced: true,
+  state: () => ({
+    movies: [],
+    message: '',
+    loading: false,
+  }),
+  getters: {},
+  mutations: {
+    updateState(state, payload) {
+      Object.keys(payload).forEach(key => {
+        state[key] = payload[key]
+      }) 
+    },
+    resetMovies(state) {
+      state.movies = []
+    }
+  },
+  actions: {
+    async searchMovies({ state, commit }, payload) {
+      try {
+        const res = await _fetchMovie({
+          ...payload,
+          page: 1
+        })
+        const { Search, totalResults } = res.data
+        console.log(res)
+        commit('updateState', {
+          movies: _uniqBy(Search, 'imdbID'),
+        })
+  
+        const total = parseInt(totalResults, 10)
+        const pageLength = Math.ceil(total / 10) 
+        if (pageLength > 1) {
+          for (let page = 2; page <= pageLength; page += 1) {
+            if (page > (payload.number / 10)) {
+              break
+            }
+            const res = await _fetchMovie({
+              ...payload,
+              page 
+            })
+            const { Search } = res.data
+            commit('updateState', {
+              movies: [
+                ...state.movies, 
+                ..._uniqBy(Search, 'imdbID')
+              ]
+            })
+          }
+        }
+      } catch (message) {
+        commit('updateState', {
+          movies: [],
+          message 
+        })
+      }
+    }
+  }
+}
+
+function _fetchMovie(payload) {
+  const { title, type, year, page } = payload
+  const OMDB_API_KEY = 'a0a1e9a9'
+  const url = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}`
+
+  return new Promise((resolve, reject) => {
+    axios.get(url)
+      .then(res => {
+        console.log(res)
+        if (res.data.Error) {
+          reject(res.data.Error)
+        }
+        resolve(res)
+      })
+      .catch(err => {
+        reject(err.message)
+      })
+  })
+}
+```
+
+- `_fetchMovies()`
+  - **movie.js** 내부에서만 사용할 `_fetchMovies()` 함수를 정의해서 **APIkey**와 **axios**를 반복해서 사용하는 코드를 줄였습니다.
+  - 함수 내부에 **try**, **catch**를 활용하여 예외 처리를 수행하였습니다.
+  - **url**의 주소를 **OMDB_API_KEY**만 남기고 다 없애버린 경우, 정상작동하지 않아야 함에도 불구하고 **GET Request**가 200번을 출력하여 `then()` 메서드로 넘어갔습니다.
+    - `then()` 메서드 내부에서도 예외 처리가 필요하므로 `if()`문을 사용하여 **res.data.Error**가 **true**일 경우(문자열이 존재), `reject()` 메서드를 실행하도록 하였습니다.
+
+- `actions` 옵션
+  - `searchMovies()` 메서드가 비동기로 구현되어 있기 때문에, **try**, **catch**를 사용하여 예외 처리를 수행하였습니다.
+  - 이미 위에서 **payload**를 인수로 받아서 사용중이기 때문에, 전개 연산자를 이용하여 **_fetchMovie**를 호출하였습니다.
+  - error가 발생할 경우 `commit()` 메서드를 사용하여 변이 메서드인, `updateState()` 메서드를 호출하도록 하였습니다.
+  - **state**에 정의해 둔 **message**에 **error**인 **message**를 할당하도록 했습니다.
+  - 이제 **store**에 있는 **message**데이터를 활용해서, 우리가 사용하는 모든 컴포넌트에서 **error** 메시지를 활용 및 출력이 가능합니다.
+
+---
+
+**MovieList.vue** 파일도 수정해 주었습니다.
+```vue
+<template>
+  <div class="container">
+    <div class="inner">
+      <div class="message">
+        {% raw %}{{ message }}{% endraw %}
+      </div>
+      <MovieItem 
+        v-for="movie in movies" 
+        :key="movie.imdbID"
+        :movie="movie"/>
+    </div>
+  </div>
+</template>
+
+<script>
+import MovieItem from './MovieItem.vue'
+export default {
+  components: {
+    MovieItem
+  },
+  computed: {
+    movies() {
+      return this.$store.state.movie.movies
+    },
+    message() {
+      return this.$store.state.movie.message
+    }
+  }
+}
+</script>
+```
+- `computed`
+  - **movie.js**에서 생성한 **message**를 양방향 데이터 바인딩으로 사용할 수 있도록 **computed** 옵션에 작성해주었습니다.
