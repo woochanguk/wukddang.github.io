@@ -27,8 +27,7 @@ categories:
 
 ---
 ## Code tester 
-여기서 예제코드를 테스트 해주세요
-(완성된 **MyBtn.vue**파일을 components폴더에 작성해두었습니다.)
+이번시간의 결과 모습입니다.
 <iframe src="https://codesandbox.io/embed/adoring-panka-fpye0g?fontsize=14&hidenavigation=1&theme=dark"
      style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
      title="adoring-panka-fpye0g"

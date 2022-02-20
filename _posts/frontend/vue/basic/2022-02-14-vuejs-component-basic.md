@@ -95,8 +95,8 @@ export default {
   }
 </style>
 ```
-`<template>`이 style 데이터를 받아서 변경될 수 있도록 `v-bind 디렉티브`를 사용하여 `backgroundColor: color`를 적용하도록 하였습니다. <br>
-요약하자면, `props`는 App.vue(부모 컴포넌트)에서 MyBtn.vue(자식 컴포넌트)로 특정한 데이터를 전달할 때 쓰는 용도로 사용되어서 `부모-자식간 데이터 통신`방법이라고도 이야기 합니다. <br>
+`<template>`이 **style** 데이터를 받아서 변경될 수 있도록 `v-bind 디렉티브`를 사용하여 `backgroundColor: color`를 적용하도록 하였습니다. <br>
+요약하자면, `props`는 `App.vue(부모 컴포넌트)`에서 `MyBtn.vue(자식 컴포넌트)`로 특정한 데이터를 전달할 때 쓰는 용도로 사용되어서 `부모-자식간 데이터 통신`방법이라고도 이야기 합니다. <br>
 
 이번에는 `<script>`태그의 `data()`에 **"color"**값을 정의하여 `<template>`태그에 지정해주도록 하겠습니다. 어디까지나 **"color"**는 문자 데이터이기 때문에, `v-bind 디렉티브`를 사용해주어야 합니다.
 
@@ -144,7 +144,7 @@ export default {
 </script>
 ```
 
-그리고 **MyBtn.vue**파일에 다음 내용을 추가해주었습니다. 속**성과 데이터의 이름이 같아서** `{ large: large }`를 축약하여 `{ large }`로 작성되었다는 것을 말씀드리고 넘어가겠습니다. 또한 코드의 간략화를 위해 **SCSS**문법을 사용했습니다.
+그리고 **MyBtn.vue**파일에 다음 내용을 추가해주었습니다. **속성과 데이터의 이름이 같아서** `{ large: large }`를 축약하여 `{ large }`로 작성되었다는 것을 말씀드리고 넘어가겠습니다. 또한 코드의 간략화를 위해 **SCSS**문법을 사용했습니다.
 
 ```vue
 <template>
@@ -215,7 +215,7 @@ export default {
 </script>
 ```
 
-그리고 **MyBtn.vue** 파일돌 다음과 같이 작성해주겠습니다. 
+그리고 **MyBtn.vue** 파일을 다음과 같이 작성해주겠습니다. 
 ```vue
 <template>
   <div
