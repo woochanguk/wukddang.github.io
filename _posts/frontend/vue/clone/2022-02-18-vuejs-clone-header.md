@@ -11,6 +11,7 @@ description: >
 invert_sidebar: false
 categories:
   - frontend
+  - vue
   - vue-clone
 ---
 
@@ -200,9 +201,9 @@ navigation 버튼들을 active한 상태로 출력하고 싶은데, 출력하려
   </body>
 </html>
 ```
-다 완료가 되었다면, **components**폴더에 **Logo.vue**파일을 생성하고 다음 내용을 입력하도록 하겠습니다. Logo의 폰트는 **Oswald**를 사용하겠습니다. <br>
+다 완료가 되었다면, **components**폴더에 **Logo.vue**파일을 생성하고 다음 내용을 입력하도록 하겠습니다. **Logo**의 폰트는 **Oswald**를 사용하겠습니다. <br>
 
-일전의 기본색을 우리가 원하는 색상으로 변경해서 작성해주었던, main.scss파일을 가져와서 사용하겠습니다.
+일전의 기본색을 우리가 원하는 색상으로 변경해서 작성해주었던, **main.scss**파일을 가져와서 사용하겠습니다.
 
 ```vue
 <template>
@@ -289,7 +290,7 @@ export default {
 ```
 
 ### Header - Headline
-Header밑의 내용을 추가해주는 코드를 작성해봅시다. **components**폴더 안에 **Headline.vue**파일을 생성해주고 다음과 같이 작성해줍시다.
+**Header**밑의 내용을 추가해주는 코드를 작성해봅시다. **components**폴더 안에 **Headline.vue**파일을 생성해주고 다음과 같이 작성해줍시다.
 
 ```vue
 <template>
@@ -320,9 +321,9 @@ Header밑의 내용을 추가해주는 코드를 작성해봅시다. **component
   }
 </style>
 ```
-작성해주고 **Home.vue**컴포넌트에 연결해주면, 잘 출력되는것을 확인할 수 있습니다. 사이트를 보면 Headline이 여백없이, 왼쪽에 붙어있습니다. Headline을 웹사이트 가운데로 정렬해주고 싶어지네요. 해봅시다. 바로 **Bootstarp**의 <a href="https://getbootstrap.com/docs/5.1/layout/containers/" target="_blank">**containers**</a>를 사용해주면 됩니다. <br>
+작성해주고 **Home.vue**컴포넌트에 연결해주면, 잘 출력되는것을 확인할 수 있습니다. 사이트를 보면 **Headline**이 여백없이, 왼쪽에 붙어있습니다. **Headline**을 웹사이트 가운데로 정렬해주고 싶어지네요. 해봅시다. 바로 **Bootstarp**의 <a href="https://getbootstrap.com/docs/5.1/layout/containers/" target="_blank">**containers**</a>를 사용해주면 됩니다. <br>
 
-Headline.vue파일을 다음과 같이 수정해주었습니다.
+**Headline.vue**파일을 다음과 같이 수정해주었습니다.
 ```vue
 <template>
   <div class="container">
@@ -358,3 +359,79 @@ Headline.vue파일을 다음과 같이 수정해주었습니다.
 </style>
 ```
 이제 여백이 자동으로 생기면서 가운데 정렬이 되어있습니다. 다시 위의 링크로 들어가서 **container**의 내용을 살펴보면 여러개의 .container class 속성들이 존재하는데, 간략하게 말씀드리면 **Extra small**, **Small**은 모바일, **Medium**, **Large**는 태블릿, **X-Large**, **XX-Large**는 데스크탑에 적용되는 사항이라고 생각해주시면 되겠습니다. 물론 우리가 원하는 크기로 설정을 해줄 수도 있죠. 추후에 적용해보도록 하겠습니다.
+
+### Header - userImage
+
+웹사이트 우측 상단에 나타나고, 클릭하면 **About** 페이지로 이동하는 사용자의 이미지를 출력하겠습니다. 다음과 같이 **Header.vue** 컴포넌트를 수정하겠습니다.
+
+```vue
+<!--Header.vue-->
+<template>
+  <header>
+    <Logo />
+    <div class="nav nav-pills">
+      <div
+        v-for="nav in navigations"
+        :key="nav.name"
+        class="nav-item">
+        <RouterLink 
+          :to="nav.href"
+          active-class="active"
+          :class="{ active: isMatch(nav.path)}"
+          class="nav-link">
+          {{ nav.name }}
+        </RouterLink>
+      </div>
+    </div>
+    <div 
+      class="user" 
+      @click="toAbout">
+      <img 
+        :src="image" 
+        :alt="name" />
+    </div>
+  </header>
+</template>
+
+<script>
+import Logo from './Logo.vue'
+export default {
+  components: {
+    Logo
+  },
+  data() {
+    ...
+  },
+  computed: {
+    image() {
+      return this.$store.state.about.image
+    },
+    name() {
+      return this.$store.state.about.name
+    }
+  },
+  methods: {
+    isMatch(path) {
+      if (!path) {
+        return false
+      }
+      console.log(this.$route)
+      return path.test(this.$route.fullPath)
+    },
+    toAbout() {
+      console.log('!!!')
+      this.$router.push('/about')
+    }
+  }
+}
+</script>
+<style>
+
+</style>
+```
+`toAbout()` 메서드를 사용하여 해당 기능을 구현하였습니다.
+- `toAbout()`
+  - **methods** 옵션 내부에 해당 메서드를 정의했고 **router** 플러그인에서 제공하는 메서드 `push()`를 사용해서 about페이지로 이동하였습니다.
+
+- **computed 옵션**
+  - **store**에 저장한 **about** 모듈 내부의 데이터중 **image**와 **name**을 사용하여 이미지를 출력하였습니다.

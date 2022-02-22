@@ -11,6 +11,7 @@ description: >
 invert_sidebar: false
 categories:
   - frontend
+  - vue
   - vue-clone
 ---
 

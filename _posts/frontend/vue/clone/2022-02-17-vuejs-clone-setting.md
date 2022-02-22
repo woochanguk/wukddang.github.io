@@ -11,6 +11,7 @@ description: >
 invert_sidebar: false
 categories:
   - frontend
+  - vue
   - vue-clone
 ---
 
@@ -162,3 +163,34 @@ $theme-colors: (
 ```
 
 하지만, `$primary`와 같이 아직 정의되지 않은 값들을 사용하는게 아닌, `#fff`등과 같은 특정 색을 사용한다고 한다면, **Required** 코드 밑에 작성해줄 필요는 없습니다.
+
+## 모든 컴포넌트에서 전역 스타일 가져오기
+
+<a href="https://github.com/webpack-contrib/sass-loader#additionaldata" target="_blank">**sass-loader**</a>를 사용하면 모든 컴포넌트에서 전역 스타일을 가져와서 사용할 수 있습니다.
+
+```js
+// webpack.config.js
+  module: {
+    rules: [
+      {
+        ...
+      },
+      {
+        test: /\.s?css$/,
+        use: [
+          // 순서 중요!
+          "vue-style-loader",
+          "style-loader",
+          "css-loader",
+          "postcss-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              additionalData: '@import "~/scss/main;'
+            }
+          }
+        ],
+      },
+    ...
+  },
+```

@@ -78,15 +78,11 @@ menu:
     submenu:
       - title: NodeJS
         url: /nodejs/
-  - title: M.S. Paper
-    url: /paper/
+  - title: Web-Basic
+    url: /web-basic/
     submenu:
-      - title: SVR
-        url: /svr/
-      - title: RF
-        url: /rf/
-      - title: MLR
-        url: /mlr/
+      - title: network
+        url: /network/
 
 # Add links to the footer.
 # Typically you'll want to link to your cookie- or privacy policy (if appliable), etc..

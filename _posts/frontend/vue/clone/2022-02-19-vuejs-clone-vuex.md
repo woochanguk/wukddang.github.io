@@ -11,6 +11,7 @@ description: >
 invert_sidebar: false
 categories:
   - frontend
+  - vue
   - vue-clone
 ---
 
@@ -125,3 +126,7 @@ export default {
 - `actions` : **메서드**와 유사합니다. 내부에 각각 함수들을 만들어서 **movie.js**의 데이터들을 활용할 수 있습니다. 
   - **context** 객체 데이터를 인수로 받게 됩니다.
   - 기본적으로 **actions**로 생성된 함수들은 **비동기**로 동작합니다.
+
+
+
+## Vuex Helpers
