@@ -1,7 +1,7 @@
 ---
 layout: list
 category: frontend
-bigtitle: Vue-Clone
+bigtitle: VueJS-Clone
 slug: vue-clone
 description: >
   VueJS Clone

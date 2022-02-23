@@ -130,3 +130,250 @@ export default {
 
 
 ## Vuex Helpers
+
+**About.vue** 컴포넌트를 보면, **computed** 옵션에 데이터를 불러와 사용하고 있는데 일일이 다 입력하기에는 좀 번거로울 수 있는 상황입니다. 따라서 이번시간에는 **Vuex Helpers**를 사용해보도록 하겠습니다. <br>
+
+컴포넌트를 수정해주면서 이해해보겠습니다.
+
+```vue
+<!--About.vue-->
+<script>
+import { mapState } from 'vuex'
+import Loader from "../components/Loader"
+export default {
+  components: {
+    Loader
+  },
+  data() {
+    return {
+      imageLoading: true
+    }
+  },
+  computed: {
+    // about모듈에 있는 상태들을 배열 데이터로 불러오기
+    // 문자데이터로 state들을 가져오기
+    // mapState() 함수가 해당 state들을 객체 데이터로 반환해줌
+
+    // computed옵션에 다른 데이터를 사용해줄 수도 있기 때문에, 
+    // 아래처럼 전개연산자로 하나의 객체 데이터 내부에 작성하는 방식으로 작성해주는 게 좋다.
+    ...mapState('about', [
+      'image',
+      'name',
+      'email',
+      'blog',
+      'phone'
+    ])
+  },
+    // image() {
+    //   return this.$store.state.about.image
+    // },
+    // name() {
+    //   return this.$store.state.about.name
+    // },
+    // email() {
+    //   return this.$store.state.about.email
+    // },
+    // blog() {
+    //   return this.$store.state.about.blog
+    // },
+    // phone() {
+    //   return this.$store.state.about.phone
+    // }
+  //},
+  mounted() {
+    this.init()
+  },
+  methods: {
+    async init() {
+      await this.$loadImage(this.image)
+      this.imageLoading = false
+    }
+  }
+}
+</script>
+```
+
+```vue
+<!--Header.vue-->
+<script>
+import { mapState } from 'vuex'
+import Logo from './Logo.vue'
+export default {
+  components: {
+    Logo
+  },
+  data() {
+    return {
+      navigations: [
+        {
+          name: 'Search',
+          href: '/'
+        },
+        {
+          name: 'Movie',
+          href: '/movie/tt4520988',
+          // 정규표현식 사용
+          // ^ : 특정 표현식으로 시작한다는 의미. escape \를 사용해서 / 로 시작한다는 의미로 작성
+          // 
+          path: /^\/movie/ // '/movie'
+        },
+        {
+          name: 'About',
+          href: '/about'
+        },
+      ]
+    }
+  },
+  computed: {
+    ...mapState('about', [
+      'image',
+      'name'
+    ]),
+    ...mapState('movie', [
+      'movies',
+      'loading',
+      'message',
+      'theMovie'
+    ])
+    // image() {
+    //   return this.$store.state.about.image
+    // },
+    // name() {
+    //   return this.$store.state.about.name
+    // }
+  },
+  methods: {
+    isMatch(path) {
+      if (!path) {
+        return false
+      }
+      console.log(this.$route)
+      return path.test(this.$route.fullPath)
+    },
+    toAbout() {
+      console.log('!!!')
+      // router 플러그인 사용
+      // push로 페이지 이동 가능. RouterLink 컴포넌트를 꼭 사용할 필요 없음
+      this.$router.push('/about')
+    }
+  }
+}
+</script>
+```
+
+```vue
+<!--MovieList.vue-->
+<script>
+import { mapState } from 'vuex'
+import MovieItem from './MovieItem.vue'
+import Loader from './Loader'
+export default {
+  components: {
+    MovieItem,
+    Loader
+  },
+  computed: {
+    ...mapState('movie', [
+      'movies',
+      'message',
+      'loading'
+    ])
+    // movies() {
+    //   return this.$store.state.movie.movies
+    // },
+    // message() {
+    //   return this.$store.state.movie.message
+    // },
+    // loading() {
+    //   return this.$store.state.movie.loading
+    // }
+  }
+}
+</script>
+```
+
+```vue
+<!--Movie.vue-->
+<script>
+import { mapState, mapActions } from 'vuex'
+import Loader from '../components/Loader'
+export default {
+  components: {
+    Loader
+  },
+  data() {
+    return {
+      imageLoading: true
+    }
+  },
+  computed: {
+    ...mapState('movie', [
+      'theMovie',
+      'loading'
+    ])
+    // theMovie() {
+    //   return this.$store.state.movie.theMovie
+    // },
+    // loading() {
+    //   return this.$store.state.movie.loading
+    // }
+  },
+  created() {
+    console.log(this.$route)
+    // this.$store.dispatch('movie/searchMovieWithId', {
+    this.searchMovieWithId({
+      id: this.$route.params.id
+    })
+  },
+  methods: {
+    ...mapActions('movie', [
+      'searchMovieWithId'
+    ]),
+    requestDiffSizeImage(url, size = 700) {
+      if (!url || url === 'N/A') {
+        this.imageLoading = false
+        return ''
+      }
+      const src = url.replace('SX300', `SX${size}`)
+      this.$loadImage(src)
+        .then(() => {
+          this.imageLoading = false
+        })
+      return src
+    }
+  }
+}
+
+</script>
+```
+**State**의 데이터를 가져올 때는 유용하지만 **Actions**나 **Mutations**에 **Helpers**를 사용하면 직관적이지 않게 된다는 단점이 존재하므로, 데이터를 가져올 때만 **Helpers****(mapState)**를 사용하는 것을 추천합니다.
+
+## Vuex 핵심 정리
+
+### Vuex Options
+<img src="/assets/img/vue/vuex-options.png" width="450" height="350"  >
+
+- `state` : **VueJS**의 데이터와 유사합니다.
+- `getters` : **VueJS**의 **computed** 옵션과 유사합니다. **state**를 계산된 형태로 사용하기 위해 **getters**를 이용합니다.
+- `mutations` : **state**를 변경할 수 있는 권한을 갖고 있어, **state**를 변경하는 용도로 사용되는 메서드입니다.
+- `actions` : 일반적인 메서드를 정의해줍니다.
+
+### Vuex Options Communication
+**Vuex**의 **Option**들은 다음과 같이 통신합니다.
+
+<img src="/assets/img/vue/vuex-state-getters.png" width="400" height="300"  >
+<img src="/assets/img/vue/vuex-state-mutations.png" width="400" height="300"  >
+
+
+<img src="/assets/img/vue/vuex-options-diagram.png" width="600" height="400"  >
+
+- **actions** 옵션은 첫 인수로 **context**를 받게 됩니다. **context**를 살펴보면 **state**, **getters**, **commit(mutations)**, **dispatch(actions)**의 내용들이 들어있습니다. 
+- 필요한 내용만을 사용하려면 객체 구조분할을 수행해주면 됩니다.
+
+### Vuex Options Description
+
+<img src="/assets/img/vue/vuex-options-description.png" width="600" height="400"  >
+
+- **mapState**, **mapGetters**의 경우 **VueJS** 컴포넌트의 **computed** 옵션에 작성해주어야 합니다.
+
+- **mapMutations**, **mapActions**의 경우 **VueJS** 컴포넌트의 **methods** 옵션에 작성해주어야 합니다.

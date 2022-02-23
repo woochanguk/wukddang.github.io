@@ -118,7 +118,7 @@ export default {
 ### 404 Page Not Found
 
 <a href="https://router.vuejs.org/guide/essentials/dynamic-matching.html#catch-all-404-not-found-route" target="_blank">**Vue Router**</a> 문서를 참조해주세요. 소괄호 `()` 안에 정규표현식을 이용하여 경로를 매칭한 후 만들어둔 컴포넌트에 연결해줄 수 있습니다.
-**Header**에 만든 웹사이트 이외의 주소로 접근하려 한다면, **404 error**를 띄워줌. 
+**Header**에 만든 웹사이트 이외의 주소로 접근하려 한다면, **404 error**를 띄워줍니다. 
 
 
 ```vue
@@ -188,7 +188,7 @@ export default createRouter({
 ```
 
 ### 부트스트랩 Breakpoint (반응형)
-화면을 줄이거나 늘일 때 요소들이 자연스럽게 줄어들고 늘어날 수 있도록 Bootstrap의 <a href="https://getbootstrap.com/docs/5.1/layout/breakpoints/" target="_blank">**Breakpoint**</a>라는 기능을 사용하도록 하겠습니다. 그중에서도 **Min-width**, **Max-width**라는 내용을 참조하여 사용할 것입니다. 
+화면을 줄이거나 늘일 때 요소들이 자연스럽게 줄어들고 늘어날 수 있도록 **Bootstrap**의 <a href="https://getbootstrap.com/docs/5.1/layout/breakpoints/" target="_blank">**Breakpoint**</a>라는 기능을 사용하도록 하겠습니다. 그중에서도 **Min-width**, **Max-width**라는 내용을 참조하여 사용할 것입니다. 
 
 
 ```vue
@@ -268,7 +268,7 @@ export default createRouter({
 </style>
 ```
 
-breakpoint 로 검색창도 변경
+사이트의 폭이 일정 크기 이상 줄어들면, `display: flex`를 `display: block`으로 변경하도록 하였습니다.
 ```vue
 <!--Search.vue-->
 <template>
@@ -437,3 +437,4 @@ breakpoint 로 검색창도 변경
 }
 </style>
 ```
+
