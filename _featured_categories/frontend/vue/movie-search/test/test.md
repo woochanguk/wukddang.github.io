@@ -1,10 +1,10 @@
 ---
 layout: list
-category: frontend
-bigtitle: VueJS-Clone
-slug: vue-clone
+category: movie-search
+bigtitle: Test
+slug: test
 description: >
-  VueJS Clone
+  Test Web Application
 
 related_posts:
   -

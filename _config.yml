@@ -59,8 +59,8 @@ menu:
         submenu:
           - title: Basic
             url: /basic/
-          - title: Clone
-            url: /clone/
+          - title: Movie Search
+            url: /movie-search/
       - title: JavaScript
         url: /js/
       - title: TypeScript
@@ -108,7 +108,7 @@ paginate_path: /:num/
 # ---------------------------------------------------------------------------------------
 
 # localhost 용
-# theme: jekyll-theme-hydejack
+theme: jekyll-theme-hydejack
 # github pages 용
 remote_theme: hydecorp/hydejack@v9
 

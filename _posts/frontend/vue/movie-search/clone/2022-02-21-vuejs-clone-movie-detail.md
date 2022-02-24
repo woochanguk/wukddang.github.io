@@ -12,6 +12,7 @@ invert_sidebar: false
 categories:
   - frontend
   - vue
+  - movie-search
   - vue-clone
 ---
 

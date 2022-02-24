@@ -12,6 +12,7 @@ invert_sidebar: false
 categories:
   - frontend
   - vue
+  - movie-search
   - vue-clone
 ---
 
@@ -338,4 +339,67 @@ async function _fetchMovie(payload) {
 
 ## 로컬 & 서버의 환경변수 구성
 
-개발한 웹사이트를 배포할 때 **APIkey**가 노출되는 위험이 존재하여 **serverless** 함수 내부에 **APIkey**를 선언하고 **serverless** 함수로 **GET Method**를 수행하도록 작성하였습니다. 하지만 **Github**과 같은 원격 저장소에 배포할 파일들을 업로드 해야하기 때문에, 여전히 해킹의 위험이 존재한다고 할 수 있습니다.
+개발한 웹사이트를 배포할 때 **APIkey**가 노출되는 위험이 존재하여 **serverless** 함수 내부에 **APIkey**를 선언하고 **serverless** 함수로 **GET Method**를 수행하도록 작성하였습니다. 하지만 **Github**과 같은 원격 저장소에 배포할 파일들을 업로드 해야하기 때문에, 여전히 해킹의 위험이 존재한다고 할 수 있습니다. <br> 
+
+따라서 이번에는 **환경변수**를 사용하여 **OMDbAPI**의 **key**를 숨겨주도록 하겠습니다. 먼저 패키지를 하나 설치하도록 하겠습니다.
+
+> **npm i -D dotenv-webpack**
+
+그 후 **webpack.config.js** 파일 내부에 **dotenv-webpack** 패키지를 가져오고, `require()` 메서드를 사용해서 연결해주도록 하겠습니다. **plugins** 옵션의 맨 밑부분에 **new** 키워드로 생성해주었습니다.
+
+```js
+const _require = (id) =>
+  require(require.resolve(id, { paths: [require.main.path] }));
+const path = _require("path");
+const HtmlPlugin = _require("html-webpack-plugin");
+const CopyPlugin = _require("copy-webpack-plugin");
+const { VueLoaderPlugin } = _require("vue-loader");
+const Dotenv = require('dotenv-webpack');
+
+module.exports = {
+  resolve: {
+    ...
+  },
+
+  // 모듈 처리 방식을 설정
+  module: {
+    ...
+  },
+
+  // 번들링 후 결과물의 처리 방식 등 다양한 플러그인들을 설정
+  plugins: [
+    new HtmlPlugin({
+      template: "./index.html",
+    }),
+    new CopyPlugin({
+      patterns: [{ from: "static" }],
+    }),
+    new VueLoaderPlugin(),
+    new Dotenv()
+  ],
+
+  // 개발 서버 옵션
+  devServer: {
+    host: "localhost",
+  },
+};
+
+```
+
+### .env
+프로젝트 작업 경로에 **.env**파일을 생성하고 해당 파일 내부에 **OMDBAPI**의 **key**에 관한 내용을 입력해주었습니다. 그리고 **serverless** 함수의 내부에는 **process.env**를 사용하여 **.env**파일에 작성한 **OMDBAPI key**를 사용할 수 있게 되었습니다.
+
+```js
+exports.handler = async function (event) {
+  console.log(event)
+  const payload = JSON.parse(event.body)
+  const { title, type, year, page, id } = payload
+  const { OMDB_API_KEY }= process.env
+  ...
+}
+```
+
+그리고 **.gitignore** 파일 내부에 **.env**를 작성해주면 **github** 원격 저장소에는 업로드 하지 않게 됩니다. **.env** 파일은 **Netlify**를 사용해서 별도로 관리해주도록 하겠습니다. <br>
+
+**Netlify**에서 원격 저장소로 만들어진 사이트의 **Site settings**로 들어가보면 **Enviroment**라는 탭이 있습니다. 해당 탭에는 
+**Environment variables**라는 항목이 있는데 해당 항목에 변수의 이름과 값을 작성해주면 모두 끝이나게 됩니다.

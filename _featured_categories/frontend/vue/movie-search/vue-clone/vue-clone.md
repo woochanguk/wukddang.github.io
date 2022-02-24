@@ -1,10 +1,10 @@
 ---
 layout: list
-category: vue
-bigtitle: Vue-Clone
-slug: vue-basic
+category: movie-search
+bigtitle: VueJS-Clone
+slug: vue-clone
 description: >
-  VueJS Basic
+  VueJS Clone
 
 related_posts:
   -
