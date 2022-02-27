@@ -53,7 +53,7 @@ categories:
     <a 
       href="https://github.com/funkyblues" 
       target="_blank">
-      (c){{ new Date().getFullYear() }} Changuk
+      (c){% raw %}{{ new Date().getFullYear() }}{% endraw %} Changuk
     </a>
   </footer>
 </template>
