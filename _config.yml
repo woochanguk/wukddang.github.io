@@ -108,9 +108,9 @@ paginate_path: /:num/
 # ---------------------------------------------------------------------------------------
 
 # localhost 용
-# theme: jekyll-theme-hydejack
+theme: jekyll-theme-hydejack
 # github pages 용
-remote_theme: hydecorp/hydejack@v9
+# remote_theme: hydecorp/hydejack@v9
 
 # Customizaton
 # ----------------------------------------------------------------------------------------
@@ -197,7 +197,7 @@ kramdown:
 
 # Set your Google Analytics id to receive `pageview` events.
 # To remove Google Anaylics from your page, remove the line below.
-# google_analytics:      UA-XXXXXXXX-X
+google_analytics: G-JY2YF5J74T
 
 # Setting a disqus shortname will enable the comment section on
 # pages with `comments: true` in the front matter.
